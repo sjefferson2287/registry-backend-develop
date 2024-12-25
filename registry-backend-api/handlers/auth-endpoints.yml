@@ -1,0 +1,173 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+
+auth-token:
+  middleware:
+    pre:
+      - src/auth/middleware/auth.validation.createUserRequest
+  handler: src/auth/controller/auth.createUser
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/signup
+        method: post
+        cors:
+          origin: '*' # <-- Specify allowed origin
+          headers: # <-- Specify allowed headers
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+
+auth-login:
+  middleware:
+    pre:
+      - src/auth/middleware/auth.validation.createUserRequest
+  handler: src/auth/controller/auth.loginUser
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/signin
+        method: post
+        cors:
+          origin: '*' # <-- Specify allowed origin
+          headers: # <-- Specify allowed headers
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+
+auth-social-login:
+  middleware:
+    pre:
+      - src/auth/middleware/auth.validation.socialLoginUser
+  handler: src/auth/controller/auth.socialLoginUser
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/social-signin
+        method: post
+        cors:
+          origin: '*'
+
+auth-logout:
+  handler: src/auth/controller/auth.logoutUser
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/signout
+        method: patch
+        cors:
+          origin: '*' # <-- Specify allowed origin
+          headers: # <-- Specify allowed headers
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+
+auth-send-account-otp:
+  middleware:
+    pre:
+      - src/auth/middleware/auth.validation.sendAccountVerificationOTP
+  handler: src/auth/controller/auth.sendAccountVerificationOTP
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/send-account-verification-otp
+        method: post
+        cors:
+          origin: '*'
+
+auth-verify-account-otp:
+  middleware:
+    pre:
+      - src/auth/middleware/auth.validation.verifyAccountVerificationOTP
+  handler: src/auth/controller/auth.verifyAccountVerificationOTP
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/verify-account-verification-otp
+        method: post
+        cors:
+          origin: '*'
+
+auth-send-password-otp:
+  middleware:
+    pre:
+      - src/auth/middleware/auth.validation.sendChangePasswordOTP
+  handler: src/auth/controller/auth.sendChangePasswordOTP
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/send-change-password-otp
+        method: post
+        cors:
+          origin: '*'
+
+auth-verify-password-otp:
+  middleware:
+    pre:
+      - src/auth/middleware/auth.validation.verifyChangePasswordOTP
+  handler: src/auth/controller/auth.verifyChangePasswordOTP
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/verify-change-password-otp
+        method: post
+        cors:
+          origin: '*'
+
+change-password:
+  middleware:
+    pre:
+      - src/auth/middleware/auth.validation.changePassword
+  handler: src/auth/controller/auth.changePassword
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/change-password
+        method: patch
+        authorizer: authRedgistry
+        cors:
+          origin: '*'
+
+auth-delete:
+  handler: src/auth/controller/auth.deleteAccount
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/delete-account
+        method: delete
+        authorizer: authRedgistry
+        cors:
+          origin: '*'
+
+auth-refresh-access-token:
+  handler: src/auth/controller/auth.refreshAccessToken
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/refresh-access-token
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: '*'
+
+auth-create-template:
+  handler: src/shared/lib/services/mail.createTemplate
+  timeout: 30
+  events:
+    - http:
+        path: services/auth/create-template
+        method: post
+        cors:
+          origin: '*'

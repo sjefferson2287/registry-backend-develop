@@ -1,0 +1,37 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+
+
+connection-connect:
+  handler: src/connections/controller/connections.connect
+  timeout: 300
+  events:
+    - http:
+        path: connections/connect/{connection_id}
+        method: POST
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+accept-connect:
+  handler: src/connections/controller/connections.acceptConnection
+  timeout: 300
+  events:
+    - http:
+        path: connections/accept/{connection_id}
+        method: POST
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+decline-connection-request:
+  handler: src/connections/controller/connections.declineConnection
+  timeout: 300
+  events:
+    - http:
+        path: connections/decline/{connection_id}
+        method: POST
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+  

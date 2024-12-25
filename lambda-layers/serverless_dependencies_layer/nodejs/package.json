@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "serverless": "^3.8.0",
+    "serverless-plugin-split-stacks": "^1.9.3",
+    "serverless-middleware": "^2.0.0",
+    "serverless-reqvalidator-plugin": "^2.0.0",
+    "serverless-api-compression": "^1.0.1",
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "ServerlessDeploymentBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ServerlessDeploymentBucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "ServerlessDeploymentBucket"
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Effect": "Deny",
+              "Principal": "*",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":s3:::",
+                      {
+                        "Ref": "ServerlessDeploymentBucket"
+                      },
+                      "/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":s3:::",
+                      {
+                        "Ref": "ServerlessDeploymentBucket"
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ServerlessDependenciesLayerLambdaLayer": {
+      "Type": "AWS::Lambda::LayerVersion",
+      "Properties": {
+        "Content": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/lambda-layers/dev/1681234562835-2023-04-11T17:36:02.835Z/ServerlessDependenciesLayer.zip"
+        },
+        "LayerName": "ServerlessDependenciesLayer",
+        "Description": "serverless dependencies"
+      }
+    },
+    "NodeDependenciesLayerLambdaLayer": {
+      "Type": "AWS::Lambda::LayerVersion",
+      "Properties": {
+        "Content": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/lambda-layers/dev/1681234562835-2023-04-11T17:36:02.835Z/NodeDependenciesLayer.zip"
+        },
+        "LayerName": "NodeDependenciesLayer",
+        "Description": "node dependencies"
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": {
+        "Ref": "ServerlessDeploymentBucket"
+      },
+      "Export": {
+        "Name": "sls-lambda-layers-dev-ServerlessDeploymentBucketName"
+      }
+    },
+    "ServerlessDependenciesLayerLambdaLayerQualifiedArn": {
+      "Description": "Current Lambda layer version",
+      "Value": {
+        "Ref": "ServerlessDependenciesLayerLambdaLayer"
+      },
+      "Export": {
+        "Name": "sls-lambda-layers-dev-ServerlessDependenciesLayerLambdaLayerQualifiedArn"
+      }
+    },
+    "ServerlessDependenciesLayerLambdaLayerHash": {
+      "Description": "Current Lambda layer hash",
+      "Value": "ec8dcbb7bbbc99889fdd4e4ba7daf41a7f5201a0",
+      "Export": {
+        "Name": "sls-lambda-layers-dev-ServerlessDependenciesLayerLambdaLayerHash"
+      }
+    },
+    "ServerlessDependenciesLayerLambdaLayerS3Key": {
+      "Description": "Current Lambda layer S3Key",
+      "Value": "serverless/lambda-layers/dev/1681234562835-2023-04-11T17:36:02.835Z/ServerlessDependenciesLayer.zip",
+      "Export": {
+        "Name": "sls-lambda-layers-dev-ServerlessDependenciesLayerLambdaLayerS3Key"
+      }
+    },
+    "NodeDependenciesLayerLambdaLayerQualifiedArn": {
+      "Description": "Current Lambda layer version",
+      "Value": {
+        "Ref": "NodeDependenciesLayerLambdaLayer"
+      },
+      "Export": {
+        "Name": "sls-lambda-layers-dev-NodeDependenciesLayerLambdaLayerQualifiedArn"
+      }
+    },
+    "NodeDependenciesLayerLambdaLayerHash": {
+      "Description": "Current Lambda layer hash",
+      "Value": "d761ea3536d273f6af543fcf3fb78231a012d03b",
+      "Export": {
+        "Name": "sls-lambda-layers-dev-NodeDependenciesLayerLambdaLayerHash"
+      }
+    },
+    "NodeDependenciesLayerLambdaLayerS3Key": {
+      "Description": "Current Lambda layer S3Key",
+      "Value": "serverless/lambda-layers/dev/1681234562835-2023-04-11T17:36:02.835Z/NodeDependenciesLayer.zip",
+      "Export": {
+        "Name": "sls-lambda-layers-dev-NodeDependenciesLayerLambdaLayerS3Key"
+      }
+    }
+  }
+}

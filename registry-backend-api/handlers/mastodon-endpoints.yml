@@ -1,0 +1,167 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+  
+mastodon-verify-credentials:
+  handler: src/mastodon/controller/mastodon.verifyCredentials
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/verify_credentials
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-public-timeline:
+  handler: src/mastodon/controller/mastodon.publicTimeline
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/public
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-notifications:
+  handler: src/mastodon/controller/mastodon.notifications
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/notifications
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-add-statuses:
+  handler: src/mastodon/controller/mastodon.addStatus
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/statuses
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-edit-statuses:
+  handler: src/mastodon/controller/mastodon.editStatus
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/statuses/{id}
+        method: put
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-status-cntxt:
+  handler: src/mastodon/controller/mastodon.statusesContext
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/statuses/{id}/context
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-reblog:
+  handler: src/mastodon/controller/mastodon.reblog
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/statuses/{id}/reblog
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-unReblog:
+  handler: src/mastodon/controller/mastodon.unReblog
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/statuses/{id}/unreblog
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-delete:
+  handler: src/mastodon/controller/mastodon.deleteStatus
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/statuses/{id}
+        method: delete
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-status-by-id:
+  handler: src/mastodon/controller/mastodon.getStatus
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/statuses/{id}
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-search:
+  handler: src/mastodon/controller/mastodon.search
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/search
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-accounts-search:
+  handler: src/mastodon/controller/mastodon.accountsSearch
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/accounts/search
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-get-posts:
+  handler: src/mastodon/controller/mastodon.posts
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/posts
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-create-posts:
+  handler: src/mastodon/controller/mastodon.posts
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/posts
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+mastodon-post-media:
+  handler: src/mastodon/controller/mastodon.media
+  timeout: 30
+  events:
+    - http:
+        path: mastodon/media
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"

@@ -1,0 +1,173 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+  
+create-group:
+  # middleware:
+  #   pre:
+  #     - src/onboarding/middleware/onboarding.validateOnboardingRequest
+  handler: src/groups/controller/groups.createGroup
+  timeout: 30
+  events:
+    - http:
+        path: groups
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+update-group:
+  # middleware:
+  #   pre:
+  #     - src/onboarding/middleware/onboarding.validateOnboardingRequest
+  handler: src/groups/controller/groups.updateGroup
+  timeout: 300
+  events:
+    - http:
+        path: groups/{group_id}
+        method: patch
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+  
+get-group-by-id:
+  handler: src/groups/controller/groups.getGroup
+  timeout: 30
+  events:
+    - http:
+        path: groups/{group_id}
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+get-all-groups:
+  handler: src/groups/controller/groups.getAllGroupsOfCurrentUser
+  timeout: 100
+  events:
+    - http:
+        path: groups
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+delete-group-by-id:
+  handler: src/groups/controller/groups.deleteGroup
+  timeout: 30
+  events:
+    - http:
+        path: groups/{group_id}
+        method: delete
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+join-group:
+  handler: src/groups/controller/groups.joinGroup
+  timeout: 30
+  events:
+    - http:
+        path: groups/{group_id}/join
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+leave-group:
+  handler: src/groups/controller/groups.leaveGroup
+  timeout: 30
+  events:
+    - http:
+        path: groups/{group_id}/leave
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+get-all-group-members:
+  handler: src/groups/controller/groups.getGroupMembers
+  timeout: 300
+  events:
+    - http:
+        path: groups/{group_id}/members
+        method: GET
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+remove-group-member:
+  handler: src/groups/controller/groups.removeGroupMember
+  timeout: 30
+  events:
+    - http:
+        path: groups/{group_id}/members/{member_id}
+        method: delete
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+add-group-status:
+  handler: src/groups/controller/groups.addGroupStatus
+  timeout: 300
+  events:
+    - http:
+        path: groups/{group_id}/statuses
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+edit-group-status:
+  handler: src/groups/controller/groups.editGroupStatus
+  timeout: 300
+  events:
+    - http:
+        path: groups/{group_id}/statuses/{status_id}
+        method: put
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+get-all-group-statuses:
+  handler: src/groups/controller/groups.getGroupStatuses
+  timeout: 300
+  events:
+    - http:
+        path: groups/{group_id}/statuses
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+delete-group-status:
+  handler: src/groups/controller/groups.deleteGroupStatus
+  timeout: 100
+  events:
+    - http:
+        path: groups/{group_id}/statuses/{status_id}
+        method: delete
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+toggle-group-status:
+  handler: src/groups/controller/groups.toggleHideGroupStatus
+  timeout: 30
+  events:
+    - http:
+        path: groups/{group_id}/statuses/{status_id}/toggle-hide
+        method: PATCH
+        authorizer: authRedgistry
+        cors:
+          origin: "*"      
+
+add-visit-to-group:
+  handler: src/groups/controller/groups.addVisitToGroup
+  timeout: 300
+  events:
+    - http:
+        path: groups/{group_id}/visit
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*" 

@@ -1,0 +1,8 @@
+const path = require('path');
+
+module.exports = {
+  'config': path.resolve('database', 'redgistryDatabase/config/db.config.js'),
+  'models-path': path.resolve('database', 'redgistryDatabase/models'),
+  'seeders-path': path.resolve('database', 'redgistryDatabase/seeders'),
+  'migrations-path': path.resolve('database', 'redgistryDatabase/migrations')
+};

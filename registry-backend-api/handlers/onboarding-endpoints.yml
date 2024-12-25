@@ -1,0 +1,65 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+  
+onboarding-create-student:
+  middleware:
+    pre:
+      - src/onboarding/middleware/onboarding.validateStudentOnboardingRequest
+  handler: src/onboarding/controller/onboarding.createStudentOnboarding
+  timeout: 50
+  events:
+    - http:
+        path: onboarding/create-student-onboarding
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+onboarding-create-parent:
+  middleware:
+    pre:
+      - src/onboarding/middleware/onboarding.validateParentOnboardingRequest
+  handler: src/onboarding/controller/onboarding.createParentOnboarding
+  timeout: 50
+  events:
+    - http:
+        path: onboarding/create-parent-onboarding
+        method: post
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+onboarding-view:
+  handler: src/onboarding/controller/onboarding.viewOnboarding
+  timeout: 30
+  events:
+    - http:
+        path: onboarding/view-onboarding
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+  
+onboarding-view-users-types:
+  handler: src/onboarding/controller/onboarding.viewUsersTypes
+  timeout: 30
+  events:
+    - http:
+        path: onboarding/view-users-types
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+onboarding-invited-user:
+  middleware:
+  pre:
+    - src/onboarding/middleware/onboarding.getInvitedUserDetailRequest
+  handler: src/onboarding/controller/onboarding.getInvitedUserDetail
+  timeout: 30
+  events:
+    - http:
+        path: onboarding/invited-user
+        method: get
+        cors:
+          origin: "*"

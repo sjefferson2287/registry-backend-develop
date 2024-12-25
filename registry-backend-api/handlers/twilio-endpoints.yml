@@ -1,0 +1,24 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+
+twilio-token:
+  handler: src/twilio/controller/twilio.getTwilioAccessToken
+  timeout: 300
+  events:
+    - http:
+        path: twilio/token
+        method: GET
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+get-all-users:
+  handler: src/twilio/controller/twilio.getUsersList
+  timeout: 300
+  events:
+    - http:
+        path: userslist
+        method: GET
+        authorizer: authRedgistry
+        cors:
+          origin: "*"

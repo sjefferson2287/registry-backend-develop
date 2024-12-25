@@ -1,0 +1,38 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+
+get-university-by-id:
+  middleware:
+    pre:
+      - src/university/middleware/university.validateUniversityRequest
+  handler: src/university/controller/university.getUniversity
+  timeout: 50
+  events:
+    - http:
+        path: university/{id}
+        method: GET
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+follow-university:
+  handler: src/university/controller/university.followUniversity
+  timeout: 30
+  events:
+    - http:
+        path: university/{id}/follow
+        method: POST
+        authorizer: authRedgistry
+        cors:
+          origin: "*"  
+
+search-universities:
+  handler: src/university/controller/university.searchUniversityByQuery
+  timeout: 300
+  events:
+    - http:
+        path: university/search
+        method: GET
+        authorizer: authRedgistry
+        cors:
+          origin: "*"

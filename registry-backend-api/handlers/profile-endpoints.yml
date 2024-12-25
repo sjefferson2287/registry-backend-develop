@@ -1,0 +1,121 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+  
+profile-update-student:
+  middleware:
+    pre:
+      - src/profile/middleware/profile.validateProfileRequest
+  handler: src/profile/controller/profile.updateStudentProfile
+  timeout: 50
+  events:
+    - http:
+        path: student-profile
+        method: POST
+        authorizer: authRedgistry
+        cors:
+          origin: "*"  
+
+parent-profile:
+  middleware:
+    pre:
+      - src/profile/middleware/profile.validateProfileRequest
+  handler: src/profile/controller/profile.updateParentProfile
+  timeout: 50
+  events:
+    - http:
+        path: parent-profile
+        method: POST
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+my-profile:
+  middleware:
+    pre:
+      - src/profile/middleware/profile.validateProfileRequest
+  handler: src/profile/controller/profile.updateStudentProfile
+  timeout: 50
+  events:
+    - http:
+        path: profile
+        method: POST
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+my-children-profile:
+  handler: src/profile/controller/profile.getChildrenOfParentProfile
+  timeout: 50
+  events:
+    - http:
+        path: profile/children
+        method: GET
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+my-parents-profile:
+  handler: src/profile/controller/profile.getParentsOfChildProfile
+  timeout: 50
+  events:
+    - http:
+        path: profile/parents
+        method: GET
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+get-profile-data:
+  handler: src/profile/controller/profile.getProfileData
+  timeout: 50
+  events:
+    - http:
+        path: profile
+        method: GET
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+invite-parent:
+  handler: src/profile/controller/profile.inviteParent
+  timeout: 30
+  events:
+    - http:
+        path: invite-parent
+        method: POST
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+invite-child:
+  handler: src/profile/controller/profile.inviteChild
+  timeout: 30
+  events:
+    - http:
+        path: invite-child
+        method: POST
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+my-invitations:
+  handler: src/profile/controller/profile.myInvitations
+  timeout: 30
+  events:
+    - http:
+        path: profile/invitations
+        method: GET
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+delete-invitation:
+  handler: src/profile/controller/profile.deleteInvitation
+  timeout: 30
+  events:
+    - http:
+        path: profile/invitation
+        method: DELETE
+        authorizer: authRedgistry
+        cors:
+          origin: "*"

@@ -1,0 +1,54 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+
+user-upload-image:
+  handler: src/user/controller/userController.uploadImage
+  timeout: 30
+  events:
+    - http:
+        path: user/user-upload-image
+        method: post
+        cors:
+          origin: '*'
+
+user-update-student-profile:
+  middleware:
+    pre:
+      - src/user/middleware/userValidation.validateUpdateStudentProfile
+  handler: src/user/controller/userController.updateStudentProfile
+  timeout: 30
+  events:
+    - http:
+        path: user/update-student-profile
+        method: patch
+        authorizer: authRedgistry
+        cors:
+          origin: '*'
+
+user-update-accademic-status:
+  middleware:
+    pre:
+      - src/user/middleware/userValidation.validateUpdateAccademicStatus
+  handler: src/user/controller/userController.updateAccademic
+  timeout: 30
+  events:
+    - http:
+        path: user/update-accademic-status/{accademic_id}
+        method: patch
+        authorizer: authRedgistry
+        cors:
+          origin: '*'
+
+user-acdmic-intrests:
+  middleware:
+    pre:
+      - src/user/middleware/userValidation.validateUpdateAccademicIntrests
+  handler: src/user/controller/userController.updateAccademic
+  timeout: 30
+  events:
+    - http:
+        path: user/update-accademic-intrests/{accademic_id}
+        method: patch
+        authorizer: authRedgistry
+        cors:
+          origin: '*'

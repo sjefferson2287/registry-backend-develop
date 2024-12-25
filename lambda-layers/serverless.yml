@@ -1,0 +1,28 @@
+service: lambda-layers
+# app and org for use with dashboard.serverless.com
+app: aws-node-express-api-redgistry
+#org: leagueswype
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: "3"
+provider:
+  name: aws
+  runtime: nodejs14.x
+# you can overwrite defaults here
+  stage: dev
+  region: us-east-1
+  package:
+    # include:
+    # - node_modules/**
+    excludeDevDependencies: true
+    exclude:
+      - .git/**
+      - .vscode/**
+      - .test/**
+layers:
+  NodeDependenciesLayer:
+    path: node_dependencies_layer
+    description: "node dependencies"
+  ServerlessDependenciesLayer:
+    path: serverless_dependencies_layer
+    description: "serverless dependencies"

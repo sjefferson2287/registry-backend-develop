@@ -1,0 +1,134 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+  
+location-view-countries:
+  handler: src/location/controller/location.viewCountries
+  timeout: 30
+  events:
+    - http:
+        path: location/view-countries
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+location-view-states:
+  handler: src/location/controller/location.viewStatesByCountryId
+  timeout: 30
+  events:
+    - http:
+        path: location/view-states/{country_id}
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+location-view-cities:
+  handler: src/location/controller/location.viewCitiesByStateId
+  timeout: 30
+  events:
+    - http:
+        path: location/view-cities/{state_id}
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+languages:
+  handler: src/location/controller/location.getLanguages
+  timeout: 30
+  events:
+    - http:
+        path: languages
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+ethinicity:
+  handler: src/location/controller/location.getEthinicity
+  timeout: 30
+  events:
+    - http:
+        path: ethinicity
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+get-gender:
+  handler: src/location/controller/location.getGender
+  timeout: 30
+  events:
+    - http:
+        path: gender
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+college-start-term:
+  handler: src/location/controller/location.getCollegeStartTerm
+  timeout: 30
+  events:
+    - http:
+        path: college-start-term
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+get-colleges:
+  handler: src/location/controller/location.getColleges
+  timeout: 30
+  events:
+    - http:
+        path: colleges
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+get-majors:
+  handler: src/location/controller/location.getMajors
+  timeout: 30
+  events:
+    - http:
+        path: majors
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+graduation-year:
+  handler: src/location/controller/location.getGraduationYear
+  timeout: 30
+  events:
+    - http:
+        path: graduation-year
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+year-planning-to-attend:
+  handler: src/location/controller/location.getYearPlanningToAttend
+  timeout: 30
+  events:
+    - http:
+        path: year-planning-to-attend
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"
+
+gpa:
+  handler: src/location/controller/location.getGPA
+  timeout: 30
+  events:
+    - http:
+        path: gpa
+        method: get
+        authorizer: authRedgistry
+        cors:
+          origin: "*"

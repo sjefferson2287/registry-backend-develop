@@ -1,0 +1,80 @@
+service: aws-node-express-api-redgistry
+app: aws-node-express-api-redgistry
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  timeout: 30 #Default Lambda timeout
+  memorySize: 128 #Default Lambda Memory Size
+  versionFunctions: false # No functions versioning
+  layers:
+    - arn:aws:lambda:us-east-1:271340019780:layer:NodeDependenciesLayer:30
+    # - arn:aws:lambda:us-east-1:271340019780:layer:NodeDependenciesLayer:31
+
+  package:
+    excludeDevDependencies: true
+    exclude:
+      - .git/**
+      - .vscode/**
+      - test/**
+
+  environment: ${file(./configs/${self:provider.stage}.yml)}
+
+  iamRoleStatements: # Permissions for all of your functions can be set here
+    - Effect: Allow
+      Action: # Gives permission to Lambda execution
+        - lambda:InvokeFunction
+        - lambda:InvokeAsync
+        - s3:PutObject
+        - s3:GetObject
+        - s3:GetObjectVersion
+        - s3:DeleteObject
+      Resource: '*'
+
+custom:
+  region: ${self:provider.region}
+  stage: ${opt:stage, self:provider.stage}
+  prefix: ${self:custom.stage}-${self:service}
+  process: ${self:custom.prefix}-process
+  config: ${self:custom.prefix}-config
+  contentCompression: 1024
+
+  serverless-offline:
+    noPrependStageInUrl: true
+
+  splitStacks:
+    perFunction: true
+    perType: true
+
+plugins:
+  - serverless-offline
+  - serverless-middleware
+  - serverless-api-compression
+
+functions: ${file(serverless-dynamic.js)}
+
+resources:
+  Resources:
+    # This response is needed for custom authorizer failures cors support ¯\_(ツ)_/¯
+    GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: EXPIRED_TOKEN
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
+    AuthFailureGatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'

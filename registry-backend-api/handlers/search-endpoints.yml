@@ -1,0 +1,13 @@
+authRedgistry:
+  handler: src/auth/controller/auth.authRedgistry
+
+search-groups:
+  handler: src/search/controller/search.searchByQuery
+  timeout: 300
+  events:
+    - http:
+        path: search
+        method: GET
+        authorizer: authRedgistry
+        cors:
+          origin: "*"

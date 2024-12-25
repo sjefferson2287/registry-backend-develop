@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "redgistry-dev",
+    "database": "postgres",
+    "host": "52.206.80.247",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "redgistry-dev",
+    "database": "postgres",
+    "host": "52.206.80.247",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "redgistry-dev",
+    "database": "postgres",
+    "host": "52.206.80.247",
+    "dialect": "postgres"
+  }
+}
